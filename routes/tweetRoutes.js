@@ -1,8 +1,7 @@
 export default app => {
   app.get('/api/test', (req, res) => {
     try {
-      console.log('Hello there');
-      res.send({ Hello: 'There' });
+      res.send({ Hello: `There ${Math.random().toFixed(3)}` });
     } catch (err) {}
   });
 };
