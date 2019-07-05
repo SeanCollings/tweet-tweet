@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // import logo from '../logo.svg';
-import { getTest } from '../actions';
+import { getTweets } from '../actions';
 import './App.css';
 
 class App extends Component {
@@ -24,8 +24,8 @@ class App extends Component {
           >
             Hello There
           </a>
-          <button onClick={this.props.getTest}>Load</button>
-          <div>{tweets ? JSON.stringify(tweets) : null}</div>
+          <button onClick={this.props.getTweets}>Load</button>
+          <div>{tweets ? JSON.stringify(tweets.response) : null}</div>
         </header>
       </div>
     );
@@ -38,5 +38,5 @@ function mapStateToProps({ tweets }) {
 
 export default connect(
   mapStateToProps,
-  { getTest }
+  { getTweets }
 )(App);

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { TEST } from './types';
+import { GET_TWEETS } from './types';
 
-export const getTest = () => async dispatch => {
-  const res = await axios.get('/api/test');
+export const getTweets = () => async dispatch => {
+  const res = await axios.get('/api/get_tweets');
 
-  dispatch({ type: TEST, payload: res.data });
+  dispatch({ type: GET_TWEETS, payload: res.data });
 };

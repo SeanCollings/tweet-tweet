@@ -1,4 +1,4 @@
-import { TEST } from '../actions/types';
+import { GET_TWEETS } from '../actions/types';
 
 const initialState = {
   tweets: null
@@ -6,7 +6,7 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case TEST:
+    case GET_TWEETS:
       return { ...state, tweets: action.payload };
     default:
       return state;

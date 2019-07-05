@@ -1,1 +1,1 @@
-export const TEST = 'test';
+export const GET_TWEETS = 'get_tweets';
