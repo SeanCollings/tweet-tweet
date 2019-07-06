@@ -1,6 +1,9 @@
 export const FILE_ERROR = {
-  MISSING_FILE: 'missing_file',
-  EMPTY_FILE: 'empty_file',
-  CORRUPTED_FILE: 'corrupted_file',
-  BAD_END_OF_FILE: 'bad_end_of_file'
+  MISSING_FILE: { constant: 'missing_file', message: 'is missing' },
+  EMPTY_FILE: { constant: 'empty_file', message: 'is empty' },
+  CORRUPTED_FILE: { constant: 'corrupted_file', message: 'has bad data' },
+  BAD_END_OF_FILE: {
+    constant: 'bad_end_of_file',
+    message: 'has bad data'
+  }
 };

@@ -1,42 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-// import logo from '../logo.svg';
 import { getTweets } from '../actions';
+
+import TweetsDisplay from './TweetsDisplay';
 import './App.css';
 
 class App extends Component {
   render() {
-    const { tweets } = this.props.tweets;
-
     return (
       <div className="App">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="/api/test"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Hello There
-          </a>
+          <p>Click the button to load Tweets</p>
           <button onClick={this.props.getTweets}>Load</button>
-          <div>{tweets ? JSON.stringify(tweets.response) : null}</div>
+          <TweetsDisplay />
         </header>
       </div>
     );
   }
 }
 
-function mapStateToProps({ tweets }) {
-  return { tweets };
-}
-
 export default connect(
-  mapStateToProps,
+  null,
   { getTweets }
 )(App);
