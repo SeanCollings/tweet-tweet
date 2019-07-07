@@ -1,3 +1,5 @@
+// File names and extension(s) found in '../utils/constants'
+
 import fs from 'fs';
 import path from 'path';
 
@@ -6,6 +8,7 @@ import { FILE_ERROR } from '../client/src/utils/constants';
 import {
   readUserFile,
   readTweetFile,
+  discernFileContents,
   buildUserTweetRelationship
 } from '../utils/utility';
 
@@ -14,6 +17,7 @@ export default app => {
     try {
       const errorsArray = [];
 
+      // Build up promise array to read all necessary files
       const promises = await FILES_TO_UPLOAD.CORRECT_FILES.map(_path => {
         return new Promise((resolve, rej) => {
           fs.readFile(_path.toString(), (err, data) => {
@@ -35,7 +39,11 @@ export default app => {
                 ? FILE_TYPE.USER
                 : FILE_TYPE.TWEET;
 
-              resolve([fileType, data.toString().replace(/\r?\n|\r/g, '¦')]);
+              // Replace the \n and \r characters with a non-ascii character delimiter
+              resolve([
+                fileType,
+                data.toString().replace(/(?:\\[rn]|[\r\n]+)+/g, '¦')
+              ]);
             }
           });
         }).catch(err => console.log('ReadFile error:', err));
@@ -52,15 +60,18 @@ export default app => {
       let userFileTransformed = null;
       let tweetFileTransformed = null;
 
+      // Read all files and extract required data
       allFiles.forEach(file => {
         switch (file[0]) {
           case FILE_TYPE.USER:
             userFileTransformed = readUserFile(file[1]);
+            // userFileTransformed = discernFileContents(file[1], file[0]);
             // console.log(userFileTransformed);
             break;
           case FILE_TYPE.TWEET:
             tweetFileTransformed = readTweetFile(file[1]);
-            console.log(tweetFileTransformed);
+            // tweetFileTransformed = discernFileContents(file[1], file[0]);
+            // console.log(tweetFileTransformed);
             break;
         }
       });
@@ -93,8 +104,6 @@ export default app => {
           tweetFileTransformed
         )
       });
-
-      // return res.send({ response: `Hello There ${Math.random().toFixed(3)}` });
     } catch (err) {
       res.sendStatus(502);
       console.log('/api/get_tweets error:', err);

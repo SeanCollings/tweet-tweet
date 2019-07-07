@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import { FILE_ERROR } from '../utils/constants';
 import { getErrorMessages } from '../utils/utility';
+import './css/TweetsDisplay.css';
 
 class TweetsDisplay extends Component {
   renderErrors = errors => {
@@ -40,6 +40,8 @@ class TweetsDisplay extends Component {
   };
 
   renderTweets = tweets => {
+    if (tweets.length === 0) return <div>No tweets to display</div>;
+
     return Object.keys(tweets).map(key => {
       const tweetsArray = [];
       if (tweets[key].length > 1) {

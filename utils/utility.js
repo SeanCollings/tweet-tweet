@@ -12,7 +12,7 @@ export const setFileDirectory = uploadDirectory => {
 };
 
 export const discernFileContents = (fileContents, fileType) => {
-  const contents = {};
+  let contents = {};
   let loopedString = '';
 
   for (let i = 0; i < fileContents.length; i++) {
@@ -21,23 +21,17 @@ export const discernFileContents = (fileContents, fileType) => {
     if (fileContents.charAt(i) === '¦' && loopedString.length > 1) {
       loopedString = removeLastElement(loopedString);
 
-      contents = discernUserFile(loopedString);
-
-      // if (loopedString.includes('follows')) {
-      //   const follower = splitString(loopedString, ' follows')[0];
-      //   const followees = createFollowees(
-      //     splitString(loopedString, 'follows ')[1]
-      //   );
-
-      //   contents[follower] = buildAllFollowees(
-      //     contents[follower],
-      //     followees
-      //   );
-
-      //   loopedString = '';
-      // } else {
-      //   return 'This file is bad, duh!';
-      // }
+      if (fileType === FILE_TYPE.USER && loopedString.includes('follows')) {
+        console.log('IN FOLLOWS');
+        contents = { ...discernUserFile(loopedString, contents) };
+        loopedString = '';
+      } else if (fileType === FILE_TYPE.TWEET && loopedString.includes('>')) {
+        console.log('IN >');
+        contents = { ...discernTweetFile(loopedString) };
+        loopedString = '';
+      } else {
+        return FILE_ERROR.CORRUPTED_FILE.constant;
+      }
     } else if (fileContents.charAt(i) === '¦' && loopedString.length === 1) {
       loopedString = '';
     }
@@ -46,43 +40,51 @@ export const discernFileContents = (fileContents, fileType) => {
   return contents;
 };
 
-const discernUserFile = string => {
-  // if (fileContents.charAt(i) === '¦' && loopedString.length > 1) {
-  //   loopedString = removeLastElement(loopedString);
-  //   if (loopedString.includes('follows')) {
-  //     const follower = splitString(loopedString, ' follows')[0];
-  //     const followees = createFollowees(
-  //       splitString(loopedString, 'follows ')[1]
-  //     );
-  //     contents[follower] = buildAllFollowees(
-  //       contents[follower],
-  //       followees
-  //     );
-  //     loopedString = '';
-  //   } else {
-  //     return 'This file is bad, duh!';
-  //   }
+const discernUserFile = (loopedString, fileContents) => {
+  const contents = { ...fileContents };
+
+  const follower = splitString(loopedString, ' follows')[0];
+  const followees = createFollowees(splitString(loopedString, 'follows ')[1]);
+
+  contents[follower] = [follower];
+  contents[follower] = buildAllFollowees(contents[follower], followees);
+
+  if (followees.length > 0) {
+    followees.forEach(followee => {
+      if (followee.trim().length > 0 && !contents[followee.trim()]) {
+        contents[followee.trim()] = [followee.trim()];
+      }
+    });
+  }
+
+  return contents;
+};
+
+const discernTweetFile = loopedString => {
+  return loopedString;
 };
 
 export const readUserFile = fileContents => {
   const userFileContents = {};
   let loopedString = '';
-  // const allUsersSet = new Set();
 
   for (let i = 0; i < fileContents.length; i++) {
     loopedString += fileContents.charAt(i);
 
-    if (fileContents.charAt(i) === '¦' && loopedString.length > 1) {
-      loopedString = removeLastElement(loopedString);
+    // Cater for newline and end of file including multiple newlines and spaces
+    if (
+      (fileContents.charAt(i) === '¦' && loopedString.length > 1) ||
+      (i === fileContents.length - 1 && loopedString.trim().length > 0)
+    ) {
+      fileContents.charAt(i) === '¦'
+        ? (loopedString = removeLastElement(loopedString))
+        : null;
+
       if (loopedString.includes('follows')) {
-        // console.log(loopedString);
         const follower = splitString(loopedString, ' follows')[0];
         const followees = createFollowees(
           splitString(loopedString, 'follows ')[1]
         );
-
-        // console.log('follower', follower);
-        // console.log('followees', followees);
 
         userFileContents[follower] = [follower];
         userFileContents[follower] = buildAllFollowees(
@@ -110,10 +112,6 @@ export const readUserFile = fileContents => {
     }
   }
 
-  // console.log('set', allUsersSet);
-  // console.log('test', arrayTest);
-  // return [userFileContents, [...allUsersSet]];
-  // console.log(userFileContents);
   return userFileContents;
 };
 
@@ -125,8 +123,14 @@ export const readTweetFile = fileContents => {
   for (let i = 0; i < fileContents.length; i++) {
     loopedString += fileContents.charAt(i);
 
-    if (fileContents.charAt(i) === '¦' && loopedString.length > 1) {
-      loopedString = removeLastElement(loopedString);
+    // Cater for newline and end of file including multiple newlines and spaces
+    if (
+      (fileContents.charAt(i) === '¦' && loopedString.length > 1) ||
+      (i === fileContents.length - 1 && loopedString.trim().length > 0)
+    ) {
+      fileContents.charAt(i) === '¦'
+        ? (loopedString = removeLastElement(loopedString))
+        : null;
 
       if (loopedString.includes('>')) {
         const tweeter = splitString(loopedString, '>')[0];
@@ -151,7 +155,7 @@ export const readTweetFile = fileContents => {
       loopedString = '';
     }
   }
-  // console.log(tweetFileContents);
+
   return tweetFileContents;
 };
 
@@ -252,7 +256,6 @@ const buildAllTweets = (oldTweets, newTweet) => {
 };
 
 const splitString = (string, stringDefiner) => {
-  // console.log(string, stringDefiner);
   return string.split(stringDefiner);
 };
 

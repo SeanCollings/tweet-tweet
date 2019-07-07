@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getTweets } from '../actions';
 
 import TweetsDisplay from './TweetsDisplay';
-import './App.css';
+import './css/App.css';
 
 class App extends Component {
   render() {
@@ -11,7 +11,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <p>Click the button to load Tweets</p>
-          <button onClick={this.props.getTweets}>Load</button>
+          <button onClick={this.props.getTweets}>Load Tweets</button>
           <TweetsDisplay />
         </header>
       </div>

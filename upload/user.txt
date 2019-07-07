@@ -1,3 +1,8 @@
-Ward follows Alan,
-Alan follows Bart
-Ward follows Alan, JuneKim follows Bart
+Ward follows Alan,
+
+Alan follows Bart
+
+Ward follows Alan, June
+
+Kim follows Bart
+
