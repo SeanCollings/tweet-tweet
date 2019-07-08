@@ -1,8 +1,8 @@
 Ward follows Alan,
 
-Alan follows Bart
+Alan follows Terry
 
-Ward follows Alan, June
+Ward follows Alan, The Architect
 
-Kim follows Bart
+Kim follows Ward
 

@@ -8,7 +8,7 @@ import App from '../components/App';
 const endpoint = '/api/get_tweets';
 const responseSuccess = {
   response: {
-    Name1: [{ order: 0, tweet: 'tweet1' }, { order: 2, tweet: 'tweet2' }],
+    Name1: [{ order: 0, tweet: 'tweet1' }, { order: 2, tweet: 'tweet3' }],
     Name2: [{ order: 1, tweet: 'tweet2' }]
   }
 };
@@ -49,17 +49,42 @@ describe('Integration Tests', () => {
 
       moxios.wait(() => {
         wrapped.update();
-        expect(wrapped.find('li').length).toEqual(3);
+        expect(wrapped.find('.tweet-message').length).toEqual(3);
         done();
       });
     });
 
-    it('will display the correct number of tweeters', done => {
+    it('will display the correct number of followers', done => {
       wrapped.find('button').simulate('click');
 
       moxios.wait(() => {
         wrapped.update();
-        expect(wrapped.find('ul').length).toEqual(2);
+        expect(wrapped.find('.tweet-follower').length).toEqual(2);
+        done();
+      });
+    });
+  });
+
+  describe('Clear Tweets', () => {
+    it('should clear all tweets', done => {
+      moxios.stubRequest(endpoint, {
+        status: 200,
+        response: responseSuccess
+      });
+
+      wrapped.find('button').simulate('click');
+
+      moxios.wait(() => {
+        wrapped.update();
+        expect(wrapped.find('.tweet-message').length).toEqual(3);
+        expect(wrapped.find('.tweet-follower').length).toEqual(2);
+
+        wrapped.find('button').simulate('click');
+        wrapped.update();
+
+        expect(wrapped.find('.tweet-follower').length).toEqual(0);
+        expect(wrapped.find('.tweet-message').length).toEqual(0);
+
         done();
       });
     });
@@ -76,7 +101,7 @@ describe('Integration Tests', () => {
 
       moxios.wait(() => {
         wrapped.update();
-        expect(wrapped.find('li').length).toEqual(2);
+        expect(wrapped.find('.tweet-error').length).toEqual(2);
         done();
       });
     });

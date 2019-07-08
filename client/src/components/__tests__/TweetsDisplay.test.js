@@ -6,12 +6,12 @@ import TweetsDisplay from '../TweetsDisplay';
 
 const tweets = {
   response: {
-    Name1: [{ order: 0, tweet: 'tweet1' }, { order: 2, tweet: 'tweet2' }],
+    Name1: [{ order: 0, tweet: 'tweet1' }, { order: 2, tweet: 'tweet3' }],
     Name2: [{ order: 1, tweet: 'tweet2' }]
   }
 };
 const error = {
-  error: [['corrputed_file', 'user.txt'], ['corrputed_file', 'tweet.txt']]
+  error: [['corrupted_file', 'user.txt'], ['corrupted_file', 'tweet.txt']]
 };
 const badResponse = {
   bad: 'response'
@@ -33,8 +33,9 @@ describe('TweetsDisplay', () => {
       );
 
       expect(wrapped.find('div').length).toEqual(1);
-      expect(wrapped.find('ul').length).toEqual(0);
-      expect(wrapped.find('li').length).toEqual(0);
+      expect(wrapped.find('.tweet-follower').length).toEqual(0);
+      expect(wrapped.find('.tweet-message').length).toEqual(0);
+      expect(wrapped.find('.tweet-error').length).toEqual(0);
 
       wrapped.unmount();
     });
@@ -52,8 +53,8 @@ describe('TweetsDisplay', () => {
         </Root>
       );
 
-      expect(wrapped.find('ul').length).toEqual(2);
-      expect(wrapped.find('li').length).toEqual(3);
+      expect(wrapped.find('.tweet-follower').length).toEqual(2);
+      expect(wrapped.find('.tweet-message').length).toEqual(3);
 
       wrapped.unmount();
     });
@@ -71,8 +72,7 @@ describe('TweetsDisplay', () => {
         </Root>
       );
 
-      expect(wrapped.find('ul').length).toEqual(1);
-      expect(wrapped.find('li').length).toEqual(2);
+      expect(wrapped.find('.tweet-error').length).toEqual(2);
 
       wrapped.unmount();
     });
@@ -91,8 +91,9 @@ describe('TweetsDisplay', () => {
       );
 
       expect(wrapped.find('div').length).toEqual(1);
-      expect(wrapped.find('ul').length).toEqual(0);
-      expect(wrapped.find('li').length).toEqual(0);
+      expect(wrapped.find('.tweet-follower').length).toEqual(0);
+      expect(wrapped.find('.tweet-message').length).toEqual(0);
+      expect(wrapped.find('.tweet-error').length).toEqual(0);
 
       wrapped.unmount();
     });

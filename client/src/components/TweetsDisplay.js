@@ -10,22 +10,30 @@ class TweetsDisplay extends Component {
     const errorMessages = getErrorMessages();
 
     for (let i = 0; i < errors.length; i++) {
-      const errorMessage = `'${errors[i][1]}' ${errorMessages[errors[i][0]]}`;
+      const errorMessage = {
+        fileName: `${errors[i][1]}`,
+        errorType: `${errorMessages[errors[i][0]]}`
+      };
       errorsArray.push(errorMessage);
     }
 
     return (
       <div>
-        <p>There have been errors</p>
-        <ul style={{ padding: '0px' }}>
+        <p className="ui red center error">There have been errors</p>
+        <div className="ui list inverted">
           {errorsArray.map((err, index) => {
             return (
-              <li key={index} style={{ listStyle: 'none' }}>
-                {err}
-              </li>
+              <div key={index} className="item tweet-error">
+                <i className="exclamation circle icon" />
+                <div className="content">
+                  <div className="header">{err.errorType}</div>
+                  <div className="description">{err.fileName}</div>
+                  <div className="list" />
+                </div>
+              </div>
             );
           })}
-        </ul>
+        </div>
       </div>
     );
   };
@@ -51,17 +59,15 @@ class TweetsDisplay extends Component {
       }
 
       return (
-        <div className="item" key={key}>
-          <i
-            className={tweetsArray.length > 1 ? `twitter icon` : `twitter icon`}
-          />
+        <div className="item tweet-follower" key={key}>
+          <i className="twitter icon" />
           <div className="content">
             <div className="header">{key}</div>
             <div className="list">
               {tweetsArray.length > 0
                 ? tweetsArray.map((tweet, index) => {
                     return (
-                      <div className="item" key={index}>
+                      <div className="item tweet-message" key={index}>
                         <i className="comment icon tweet" />
                         <div className="content">
                           <div className="description">{tweet.tweet}</div>
@@ -72,23 +78,8 @@ class TweetsDisplay extends Component {
                 : null}
             </div>
           </div>
+          <div className="ui divider" />
         </div>
-        // <div key={key}>
-        //   {key}
-        //   <div style={{ marginLeft: '72px' }}>
-        //     <ul style={{ padding: '0px' }}>
-        //       {tweetsArray.length > 0
-        //         ? tweetsArray.map((tweet, index) => {
-        //             return (
-        //               <li key={index} style={{ listStyle: 'none' }}>
-        //                 {tweet.tweet}
-        //               </li>
-        //             );
-        //           })
-        //         : null}
-        //     </ul>
-        //   </div>
-        // </div>
       );
     });
   };
@@ -97,15 +88,12 @@ class TweetsDisplay extends Component {
     const { tweets } = this.props.tweets;
 
     if (!tweets) {
-      return <div>No tweets loaded, yet...</div>;
+      return <div className="no-tweets">No tweets loaded...</div>;
     }
 
     if (tweets.response) {
       return (
-        <div
-          // style={{ width: '90%', textAlign: 'left' }}
-          className="ui list inverted"
-        >
+        <div className="ui list inverted">
           {this.renderTweets(tweets.response)}
         </div>
       );
@@ -113,7 +101,7 @@ class TweetsDisplay extends Component {
       return <div>{this.renderErrors(tweets.error)}</div>;
     }
 
-    return <div>Something went wrong!</div>;
+    return <div className="error">Something went wrong!</div>;
   }
 }
 

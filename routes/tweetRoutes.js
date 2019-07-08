@@ -6,11 +6,9 @@ import path from 'path';
 import { FILES_TO_UPLOAD, FILE_TYPE, EXTENSION } from '../utils/constants';
 import { FILE_ERROR } from '../client/src/utils/constants';
 import {
-  readUserFile,
-  readTweetFile,
   discernFileContents,
   buildUserTweetRelationship
-} from '../utils/utility';
+} from '../server/userTweets';
 
 export default app => {
   app.get('/api/get_tweets', async (req, res) => {
@@ -39,7 +37,7 @@ export default app => {
                 ? FILE_TYPE.USER
                 : FILE_TYPE.TWEET;
 
-              // Replace the \n and \r characters with a non-ascii character delimiter
+              // Replace \n and \r characters with a non-ascii character delimiter
               resolve([
                 fileType,
                 data.toString().replace(/(?:\\[rn]|[\r\n]+)+/g, '¦')
@@ -64,14 +62,13 @@ export default app => {
       allFiles.forEach(file => {
         switch (file[0]) {
           case FILE_TYPE.USER:
-            userFileTransformed = readUserFile(file[1]);
-            // userFileTransformed = discernFileContents(file[1], file[0]);
-            // console.log(userFileTransformed);
+            userFileTransformed = discernFileContents(file[1], FILE_TYPE.USER);
             break;
           case FILE_TYPE.TWEET:
-            tweetFileTransformed = readTweetFile(file[1]);
-            // tweetFileTransformed = discernFileContents(file[1], file[0]);
-            // console.log(tweetFileTransformed);
+            tweetFileTransformed = discernFileContents(
+              file[1],
+              FILE_TYPE.TWEET
+            );
             break;
         }
       });
@@ -96,8 +93,7 @@ export default app => {
         });
       }
 
-      // console.log('userFileTransformed', userFileTransformed);
-      // console.log('tweetFileTransformed', tweetFileTransformed);
+      // Send the final user/tweet list to the FE
       return res.send({
         response: buildUserTweetRelationship(
           userFileTransformed,

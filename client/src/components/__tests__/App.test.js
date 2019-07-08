@@ -27,25 +27,4 @@ describe('App', () => {
   it('shows the display tweets section', () => {
     expect(wrapped.find(TweetsDisplay).length).toEqual(1);
   });
-
-  // describe('the button', () => {
-  //   beforeEach(() => {
-  //     //   wrapped.find('button').simulate('click');
-  //     // wrapped.update();
-  //   });
-
-  //   it('calls the getTweets action', () => {
-  //     const button = wrapped.find('button');
-  //     const instance = wrapped.instance();
-
-  //     instance.onClick = jest.fn(instance.onClick);
-
-  //     button.simulate('click');
-  //     expect(instance.onClick).toHaveBeenCalled();
-  //     // wrapped.find('button').simulate('click');
-  //     // wrapped.update();
-
-  //     // expect
-  //   });
-  // });
 });

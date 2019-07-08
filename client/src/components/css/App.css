@@ -1,9 +1,24 @@
 .App-header {
-  min-height: 100vh;
+  min-height: calc(100vh - 28px);
 }
 
 .header {
   width: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+.all-content {
+  display: grid;
+  justify-content: center;
+}
+
+.test {
+  position: absolute;
+  /* margin-left: 17px; */
+  left: 14px;
 }
 
 @keyframes App-logo-spin {
