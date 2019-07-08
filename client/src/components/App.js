@@ -9,11 +9,21 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <p>Click the button to load Tweets</p>
-          <button onClick={this.props.getTweets}>Load Tweets</button>
-          <TweetsDisplay />
-        </header>
+        <div className="ui inverted segment">
+          <header className="App-header">
+            <h3 className="ui block blue inverted header">Tweet-Tweet</h3>
+            <p>View tweets loaded right from the server</p>
+            <h4 className="ui horizontal inverted divider">
+              <button
+                className="ui inverted primary button"
+                onClick={this.props.getTweets}
+              >
+                Load Tweets
+              </button>
+            </h4>
+            <TweetsDisplay />
+          </header>
+        </div>
       </div>
     );
   }

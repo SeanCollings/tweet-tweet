@@ -51,22 +51,44 @@ class TweetsDisplay extends Component {
       }
 
       return (
-        <div key={key}>
-          {key}
-          <div style={{ marginLeft: '72px' }}>
-            <ul style={{ padding: '0px' }}>
+        <div className="item" key={key}>
+          <i
+            className={tweetsArray.length > 1 ? `twitter icon` : `twitter icon`}
+          />
+          <div className="content">
+            <div className="header">{key}</div>
+            <div className="list">
               {tweetsArray.length > 0
                 ? tweetsArray.map((tweet, index) => {
                     return (
-                      <li key={index} style={{ listStyle: 'none' }}>
-                        {tweet.tweet}
-                      </li>
+                      <div className="item" key={index}>
+                        <i className="comment icon tweet" />
+                        <div className="content">
+                          <div className="description">{tweet.tweet}</div>
+                        </div>
+                      </div>
                     );
                   })
                 : null}
-            </ul>
+            </div>
           </div>
         </div>
+        // <div key={key}>
+        //   {key}
+        //   <div style={{ marginLeft: '72px' }}>
+        //     <ul style={{ padding: '0px' }}>
+        //       {tweetsArray.length > 0
+        //         ? tweetsArray.map((tweet, index) => {
+        //             return (
+        //               <li key={index} style={{ listStyle: 'none' }}>
+        //                 {tweet.tweet}
+        //               </li>
+        //             );
+        //           })
+        //         : null}
+        //     </ul>
+        //   </div>
+        // </div>
       );
     });
   };
@@ -80,7 +102,10 @@ class TweetsDisplay extends Component {
 
     if (tweets.response) {
       return (
-        <div style={{ width: '90%', textAlign: 'left' }}>
+        <div
+          // style={{ width: '90%', textAlign: 'left' }}
+          className="ui list inverted"
+        >
           {this.renderTweets(tweets.response)}
         </div>
       );
