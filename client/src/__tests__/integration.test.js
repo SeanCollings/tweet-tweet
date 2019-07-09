@@ -21,7 +21,7 @@ const badResponse = {
 
 let wrapped;
 
-describe('Integration Tests', () => {
+describe('Jest Client Integration Tests', () => {
   beforeEach(() => {
     moxios.install();
     wrapped = mount(
@@ -108,7 +108,7 @@ describe('Integration Tests', () => {
   });
 
   describe('Bad Response', () => {
-    it('will handle an incorrect reponse format', () => {
+    it('will handle an incorrect reponse format', done => {
       moxios.stubRequest(endpoint, {
         status: 200,
         response: badResponse
@@ -116,8 +116,9 @@ describe('Integration Tests', () => {
 
       moxios.wait(() => {
         wrapped.update();
-        expect(wrapped.find('ul').length).toEqual(0);
-        expect(wrapped.find('li').length).toEqual(0);
+        expect(wrapped.find('.tweet-error').length).toEqual(0);
+        expect(wrapped.find('.tweet-follower').length).toEqual(0);
+        expect(wrapped.find('.tweet-message').length).toEqual(0);
         done();
       });
     });

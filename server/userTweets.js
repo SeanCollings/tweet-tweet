@@ -7,7 +7,8 @@ import { initialiseTweets } from './tweet';
 /**
  * Converts a file string into an object depending on the file type
  *
- * Returns: Object
+ * Returns: Object on success
+ * Return: String on failure
  *
  * @param {string} fileContents The contents of the file in string format
  * @param {string} fileType The type of the file. Either 'user' or 'tweet'

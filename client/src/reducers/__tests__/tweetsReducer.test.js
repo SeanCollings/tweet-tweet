@@ -6,7 +6,7 @@ const initialState = {
 };
 const payload = { Name: [{ order: 0, tweet: 'tweet' }] };
 
-describe('TweetsReducer', () => {
+describe('Jest Client tweetsReducer', () => {
   it('handles actions of type GET_TWEETS', () => {
     const action = {
       type: GET_TWEETS,

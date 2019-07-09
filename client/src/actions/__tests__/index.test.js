@@ -18,7 +18,7 @@ const response = 'getTweets';
 const errorResponse = 'Request failed with status code 502';
 const endpoint = '/api/get_tweets';
 
-describe('Actions', () => {
+describe('Jest Client Actions', () => {
   describe('getTweets - Success', () => {
     beforeEach(() => {
       store.clearActions();

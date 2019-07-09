@@ -17,7 +17,7 @@ const badResponse = {
   bad: 'response'
 };
 
-describe('TweetsDisplay', () => {
+describe('Jest Client TweetsDisplay', () => {
   let wrapped;
 
   describe('Pre-load', () => {

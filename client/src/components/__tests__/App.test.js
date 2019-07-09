@@ -19,7 +19,7 @@ afterEach(() => {
   wrapped.unmount();
 });
 
-describe('App', () => {
+describe('Jest Client App', () => {
   it('shows a button', () => {
     expect(wrapped.find('button').length).toEqual(1);
   });
