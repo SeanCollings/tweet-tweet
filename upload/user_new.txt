@@ -1,0 +1,8 @@
+Ward follows Alan,
+
+Alan follows Terry
+
+Ward follows Alan, The Architect
+
+Kim follows Ward
+
