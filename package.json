@@ -30,6 +30,7 @@
     "concurrently": "^4.1.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "helmet": "^3.18.0",
     "heroku-ssl-redirect": "0.0.4",
     "nodemon": "^1.19.1"
   },
