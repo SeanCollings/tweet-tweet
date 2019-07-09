@@ -1,19 +1,21 @@
 import axios from 'axios';
-import { GET_TWEETS, CLEAR_TWEETS, SHOW_LOADER, HIDE_LOADER } from './types';
+import {
+  GET_TWEETS,
+  CLEAR_TWEETS,
+  SHOW_LOADER,
+  HIDE_LOADER,
+  NETWORK_ERROR_RESPONSE
+} from './types';
 
 export const getTweets = () => async dispatch => {
   try {
     const res = await axios.get('/api/get_tweets');
 
     dispatch({ type: GET_TWEETS, payload: res.data });
+    dispatch({ type: NETWORK_ERROR_RESPONSE, payload: null });
   } catch (err) {
-    console.log(err);
-
-    if (
-      err.message === 'Network Error' ||
-      'Request failed with status code 502'
-    )
-      dispatch({ type: HIDE_LOADER });
+    dispatch({ type: HIDE_LOADER });
+    dispatch({ type: NETWORK_ERROR_RESPONSE, payload: err.message });
   }
 };
 

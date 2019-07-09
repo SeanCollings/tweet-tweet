@@ -85,10 +85,17 @@ class TweetsDisplay extends Component {
   };
 
   render() {
-    const { tweets } = this.props.tweets;
+    const {
+      tweets: { tweets },
+      networkResponse: { response }
+    } = this.props;
 
     if (!tweets) {
-      return <div className="no-tweets">No tweets loaded...</div>;
+      return (
+        <div className={response ? 'error' : 'no-tweets'}>
+          {response ? response : 'No tweets loaded...'}
+        </div>
+      );
     }
 
     if (tweets.response) {
@@ -105,8 +112,8 @@ class TweetsDisplay extends Component {
   }
 }
 
-function mapStateToProps({ tweets }) {
-  return { tweets };
+function mapStateToProps({ tweets, networkResponse }) {
+  return { tweets, networkResponse };
 }
 
 export default connect(mapStateToProps)(TweetsDisplay);
