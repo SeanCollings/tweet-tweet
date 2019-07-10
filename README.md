@@ -1,12 +1,12 @@
 # tweet-tweet #
 
-This webapp contains 2 parts, namely a frontend (FE) section and a backend (BE) server section. The FE is written in ReactJS with Redux for state management and the BE server is written in NodeJS. Below are the instructions on how to install and run the app.
+This web-app contains 2 parts, namely a frontend (FE) section and a backend (BE) server section. The FE is written in ReactJS with Redux for state management and the BE server is written in NodeJS. Below are the instructions on how to install and run the app.
 
 Both the FE and server have automated unit tests written to handle most test cases the the app may experience. The FE contains one integration test to test the flow the app will undergo. The FE unit tests are written using `Jest + Enzyme` and the server unit tests are written in `Mocha` with the `Chai` assertion library. Further down is an explanation on how to run these tests.
 
 ### Requirement ###
-This app was designed to read in two text files, namely *user.txt* and *tweet.txt* and print to the console a pre-defined output.
-<br/>
+This app was designed to read in two seven-bit ASCII text files, *user.txt* and *tweet.txt*, and print to the console a pre-defined output. It was primarily aimed at a BE solution but, as I enjoy FE/ReactJS development, I wanted to include a frontend aspect in the form of a ReactJS + Redux view. 
+<br />
 
 The format of the *user.txt* file is as follows:
 
@@ -49,13 +49,13 @@ The output was to look like the below:
 4. One of the better browsers to view this app in is Chrome
 
 ### Running Tests: ###
-Both the FE `Jest + Enzyme` tests as well as the server `Mocha + Chai` tests can be run at the same time and from the same command window. This allows all changes throughout the app to be run at once and for errors to be found haste-haste. They both contain a watch tag so if they are running, they will automatically re-run the tests after every save.
+Both the FE `Jest + Enzyme` tests as well as the server `Mocha + Chai` tests can be run at the same time and from the same command window. This allows all changes throughout the app to be run at once and for errors to be found and corrected as they are introduced. They both contain a watch tag so if they are running, they will automatically re-run the tests after every save.
 
 The tests can be run as follows:
 1. From within a command window in the `tweet-tweet` root folder, run the command `npm run test`
 2. This will start up both tests. When first run, they may take some time to start up.
 
-They can also be run seperatly so as to test only the client or server at a time.
+They can also be run separatly giving the option to test only the client or only the server at a time.
 
 For the client and from within the root directory, run:
 1. `npm run test-client`
@@ -112,7 +112,7 @@ I went with the following assumptions when designing this app:
 - - - -
 
 #### Taking it further ####
-There wasn't enough time for me to do everything that I wanted within this app and there a few things that if time permitted, would have made for some nice additions:
+If given the opportunity, I would have included the following additions:
 1. Added a feature on the FE to allow a user to upload their own `tweet.txt` or `user.txt` files. These files would then be sent to the server for processing to be returned and displayed in the correct format on the FE.
 2. Deployed the code to Heroku so that the app would be available everywhere. This would have been done after point 1 so that users could make changes to the the tweets and users that get displayed.
 3. Add a `CI/CD` implementation in Heroku so that any pushes to this repo would run all unit tests and if they passed, would then deploy it to Heroku automatically
